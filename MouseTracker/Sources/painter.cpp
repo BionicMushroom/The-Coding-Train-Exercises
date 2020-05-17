@@ -121,8 +121,7 @@ namespace helpers
 
 	[[nodiscard]] static auto create_dxgi_device()
 	{
-		auto dxgi_device{ details::create_d3d_device().as<IDXGIDevice1>() };
-		return dxgi_device;
+		return details::create_d3d_device().as<IDXGIDevice1>();
 	}
 
 	[[nodiscard]] static auto create_swap_chain(const winrt::com_ptr<IDXGIDevice1>& dxgi_device, const CoreWindow& window)
