@@ -10,3 +10,5 @@ To build the exercises:
 Each exercise is a self-contained project as it doesn't depend on other projects. It can be built and run independently.
 ## Zoog
 This exercise draws an approximation of the alien called Zoog introduced at the end of https://www.youtube.com/watch?v=n2oHuKG_BQc.
+## MouseTracker
+This exercise draws a line between the current and previous mouse position. The line's thickness changes according to the speed of the mouse. The line's color gets more red as the mouse moves to the right and more blue as the mouse moves downwards. The exercise was proposed at the end of https://www.youtube.com/watch?v=ibW4oA7-n8I.
