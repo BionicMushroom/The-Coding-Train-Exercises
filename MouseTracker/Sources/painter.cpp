@@ -130,7 +130,7 @@ namespace helpers
 		winrt::check_hresult(dxgi_device->GetAdapter(adapter.put()));
 
 		winrt::com_ptr<IDXGIFactory2> factory;
-		winrt::check_hresult(adapter->GetParent(winrt::guid_of<decltype(factory)::type>(), factory.put_void()));
+		factory.capture(adapter, &IDXGIAdapter::GetParent);
 
 		DXGI_SWAP_CHAIN_DESC1 swap_chain_description{};
 		swap_chain_description.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
@@ -172,7 +172,7 @@ namespace helpers
 	static auto set_render_target(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const winrt::com_ptr<IDXGISwapChain1>& swap_chain)
 	{
 		winrt::com_ptr<IDXGISurface> back_buffer;
-		winrt::check_hresult(swap_chain->GetBuffer(0, winrt::guid_of<decltype(back_buffer)::type>(), back_buffer.put_void()));
+		back_buffer.capture(swap_chain, &IDXGISwapChain1::GetBuffer, 0);
 
 		const auto dpi{ DisplayInformation::GetForCurrentView().LogicalDpi() };
 		
