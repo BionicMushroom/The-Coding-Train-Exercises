@@ -1,14 +1,14 @@
 #include "pch.h"
 #include "view_factory.h"
 
-using namespace winrt::Windows::ApplicationModel;
+using namespace winrt::Windows::ApplicationModel::Core;
 
-view_factory::view_factory(const winrt::Windows::ApplicationModel::Core::IFrameworkView& framework_view) noexcept
+view_factory::view_factory(const IFrameworkView& framework_view) noexcept
 	: view{ framework_view }
 {
 }
 
-Core::IFrameworkView view_factory::CreateView() const noexcept
+IFrameworkView view_factory::CreateView() const noexcept
 {
 	return view;
 }
