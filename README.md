@@ -12,3 +12,5 @@ Each exercise is a self-contained project as it doesn't depend on other projects
 This exercise draws an approximation of the alien called Zoog introduced at the end of https://www.youtube.com/watch?v=n2oHuKG_BQc using the Windows.UI.Composition API.
 ## MouseTracker
 This exercise draws a line between the current and previous mouse position using Direct2D. The line's thickness changes according to the speed of the mouse. The line's color gets more red as the mouse moves to the right and more blue as the mouse moves downwards. The exercise was proposed at the end of https://www.youtube.com/watch?v=ibW4oA7-n8I.
+## CircleMorphing
+This exercise animates the color and size of a circle using key frame animations provided by Windows.UI.Composition. The proposal to animate something was stated in https://www.youtube.com/watch?v=rZ36BzXFT6Q.
