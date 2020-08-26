@@ -7,7 +7,7 @@ using namespace winrt::Windows::UI::Composition;
 
 #define ANIMATED_RADIUS L"AnimatedRadius"
 #define THIS_TARGET_ANIMATED_RADIUS L"this.Target." ANIMATED_RADIUS
-// I know macros are ugly but unfortunately there is no easy to implement and read constexpr string in C++ 17.
+// I know macros are ugly but unfortunately there is no easy way to implement and read constexpr strings in C++ 17.
 
 namespace constants
 {

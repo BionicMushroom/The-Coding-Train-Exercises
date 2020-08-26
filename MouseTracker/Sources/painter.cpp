@@ -72,7 +72,7 @@ namespace helpers
 			winrt::com_ptr<ID2D1GradientStopCollection> stop_collection;
 
 			winrt::check_hresult(
-				device_context->CreateGradientStopCollection(gradient_stops.data(), static_cast<UINT32>(gradient_stops.size()), stop_collection.put())
+				device_context->CreateGradientStopCollection(gradient_stops.data(), UINT32{ gradient_stops.size() }, stop_collection.put())
 			);
 
 			winrt::com_ptr<ID2D1LinearGradientBrush> brush;
@@ -98,7 +98,7 @@ namespace helpers
 	[[nodiscard]] static auto create_d2d_factory() noexcept
 	{
 		winrt::com_ptr<ID2D1Factory1> factory;
-		D2D1_FACTORY_OPTIONS factory_options{ build_configuration::is_debug ? D2D1_DEBUG_LEVEL_INFORMATION : D2D1_DEBUG_LEVEL_NONE };
+		const D2D1_FACTORY_OPTIONS factory_options{ build_configuration::is_debug ? D2D1_DEBUG_LEVEL_INFORMATION : D2D1_DEBUG_LEVEL_NONE };
 
 		winrt::check_hresult(
 			D2D1CreateFactory(D2D1_FACTORY_TYPE_SINGLE_THREADED, factory_options, factory.put())
