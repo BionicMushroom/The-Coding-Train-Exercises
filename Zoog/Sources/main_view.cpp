@@ -109,7 +109,7 @@ void main_view::draw_eyes() noexcept
 {
 	constexpr float offset_from_head_margin{ constants::head::radius.x / 15.f };
 	constexpr auto radius_x{ constants::head::radius.x / 3.4f };
-	constexpr auto radius_y{ radius_x * 2 };
+	constexpr auto radius_y{ radius_x * 2.f };
 	constexpr float2 radius{ radius_x, radius_y };
 
 	float2 center{ constants::head::center.x - constants::head::radius.x + radius.x + offset_from_head_margin , constants::head::center.y };
