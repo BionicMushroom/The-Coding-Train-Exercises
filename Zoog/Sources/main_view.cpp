@@ -4,7 +4,9 @@
 using namespace winrt::Windows::ApplicationModel::Core;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::Foundation::Numerics;
+using namespace winrt::Windows::UI;
 using namespace winrt::Windows::UI::Core;
+using namespace winrt::Windows::UI::ViewManagement;
 
 namespace constants
 {
@@ -17,15 +19,42 @@ namespace constants
 	
 	namespace color
 	{
-		constexpr std::uint8_t black{ 0 };
-		constexpr std::uint8_t gray{ 127 };
-		constexpr std::uint8_t white{ 255 };
+		constexpr Color black{ 255, 0, 0, 0 };
+		constexpr Color gray{ 255, 127, 127, 127 };
+		constexpr Color white{ 255, 255, 255, 255 };
 	}
 
 	namespace head
 	{		
 		constexpr float2 radius{ body::size.x * 1.3f, body::size.x * 1.3f };
 		constexpr float2 center{ body::offset.x + body::size.x / 2.f, body::offset.y + radius.y - body::maximum_distance_y };
+	}
+}
+
+namespace helpers
+{
+	namespace details
+	{
+		void customize_title_bar_buttons(const ApplicationViewTitleBar& title_bar) noexcept
+		{
+			title_bar.ButtonBackgroundColor(constants::color::white);
+			title_bar.ButtonForegroundColor(constants::color::black);
+
+			title_bar.ButtonHoverBackgroundColor(constants::color::gray);
+			title_bar.ButtonHoverForegroundColor(constants::color::white);
+
+			title_bar.ButtonInactiveBackgroundColor(constants::color::white);
+			title_bar.ButtonInactiveForegroundColor(constants::color::gray);
+
+			title_bar.ButtonPressedBackgroundColor(constants::color::black);
+			title_bar.ButtonPressedForegroundColor(constants::color::white);
+		}
+	}
+
+	void customize_title_bar() noexcept
+	{
+		CoreApplication::GetCurrentView().TitleBar().ExtendViewIntoTitleBar(true);
+		details::customize_title_bar_buttons(ApplicationView::GetForCurrentView().TitleBar());		
 	}
 }
 
@@ -57,6 +86,7 @@ void main_view::Uninitialize() const noexcept
 
 void main_view::prepare_window(const CoreWindow& window) noexcept
 {
+	helpers::customize_title_bar();
 	window.SizeChanged({ this, &main_view::on_size_changed });
 }
 

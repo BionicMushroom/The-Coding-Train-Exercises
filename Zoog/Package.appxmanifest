@@ -18,9 +18,10 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Zoog.App">
-      <uap:VisualElements DisplayName="Zoog" Description="A project for a C++/WinRT Universal Windows Platform (UWP) app directly implementing CoreApplication"
-        Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent">
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+      <uap:VisualElements DisplayName="Zoog" 
+        Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent" Description="An app that draws an approximation of the alien called Zoog introduced at the end of https://www.youtube.com/watch?v=n2oHuKG_BQc using the Windows.UI.Composition API.">
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="white"/>
+        <uap:DefaultTile/>
       </uap:VisualElements>
     </Application>
   </Applications>

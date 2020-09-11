@@ -13,8 +13,8 @@ class painter final
 
 	void create_and_append_sprite_shape(
 		const winrt::Windows::UI::Composition::CompositionGeometry& geometry,
-		std::uint8_t stroke_color,
-		std::uint8_t fill_color) noexcept;
+		const winrt::Windows::UI::Color& stroke_color,
+		const winrt::Windows::UI::Color& fill_color) noexcept;
 
 	void resize_lines(const winrt::Windows::Foundation::Numerics::float2& scale_factor) const noexcept;
 	void resize_rectangles(const winrt::Windows::Foundation::Numerics::float2& scale_factor) const noexcept;
@@ -26,24 +26,24 @@ public:
 	void draw_line(
 		const winrt::Windows::Foundation::Numerics::float2& start,
 		const winrt::Windows::Foundation::Numerics::float2& end,
-		std::uint8_t stroke_color) noexcept;
+		const winrt::Windows::UI::Color& stroke_color) noexcept;
 
 	void draw_rectangle(
 		const winrt::Windows::Foundation::Numerics::float2& offset,
 		const winrt::Windows::Foundation::Numerics::float2& size,
-		std::uint8_t stroke_color,
-		std::uint8_t fill_color) noexcept;
+		const winrt::Windows::UI::Color& stroke_color,
+		const winrt::Windows::UI::Color& fill_color) noexcept;
 
 	void draw_ellipse(
 		const winrt::Windows::Foundation::Numerics::float2& center,
 		const winrt::Windows::Foundation::Numerics::float2& radius,
-		std::uint8_t stroke_color,
-		std::uint8_t fill_color) noexcept;
+		const winrt::Windows::UI::Color& stroke_color,
+		const winrt::Windows::UI::Color& fill_color) noexcept;
 
 	void resize(const winrt::Windows::Foundation::Numerics::float2& window_size) noexcept;
 
 	[[nodiscard]] constexpr static winrt::Windows::Foundation::Numerics::float2 ideal_window_size() noexcept
 	{
-		return { 2560.f, 1408.f };
+		return { 2560.f, 1440.f };
 	}
 };
