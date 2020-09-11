@@ -4,7 +4,7 @@ namespace build_configuration
 {
 #ifdef _DEBUG
 	constexpr auto is_debug{ true };
-#elif
+#else
 	constexpr auto is_debug{ false };
 #endif // _DEBUG
 }
