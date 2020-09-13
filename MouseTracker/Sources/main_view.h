@@ -16,10 +16,6 @@ private:
 
 	float smooth_stroke_width(const winrt::Windows::Foundation::Point& current_pointer_position) const noexcept;
 
-	void on_size_changed(
-		const winrt::Windows::UI::Core::CoreWindow& window,
-		const winrt::Windows::UI::Core::WindowSizeChangedEventArgs& arguments) noexcept;
-
 	void on_pointer_entered(
 		const winrt::Windows::UI::Core::CoreWindow& window,
 		const winrt::Windows::UI::Core::PointerEventArgs& arguments) noexcept;
@@ -28,8 +24,22 @@ private:
 		const winrt::Windows::UI::Core::CoreWindow& window,
 		const winrt::Windows::UI::Core::PointerEventArgs& arguments) noexcept;
 
+	void on_resize_started(
+		const winrt::Windows::UI::Core::CoreWindow& window,
+		const winrt::Windows::Foundation::IInspectable& inspectable) noexcept;
+
+	void on_resize_completed(
+		const winrt::Windows::UI::Core::CoreWindow& window,
+		const winrt::Windows::Foundation::IInspectable& inspectable) noexcept;
+
+	void on_size_changed(
+		const winrt::Windows::UI::Core::CoreWindow& window,
+		const winrt::Windows::UI::Core::WindowSizeChangedEventArgs& arguments) noexcept;
+
 	painter painter;
 
 	winrt::Windows::Foundation::Point previous_pointer_position{};
 	float previous_stroke_width{ 1.f };
+
+	bool is_resizing{ false };
 };

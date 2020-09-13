@@ -193,6 +193,11 @@ namespace helpers
 	{
 		winrt::check_hresult(swap_chain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
 	}
+
+	[[nodiscard]] constexpr static auto size_from(const Rect& rect) noexcept
+	{
+		return Size{ rect.Width, rect.Height };
+	}
 }
 
 void painter::create_factory() noexcept
@@ -206,6 +211,8 @@ void painter::create_device_dependent_resources(const CoreWindow& window)
 	device_context = helpers::create_d2d_device_context(factory, dxgi_device);
 
 	const auto window_bounds{ window.Bounds() };
+	previous_window_size = helpers::size_from(window_bounds);
+
 	red_brush = helpers::create_red_gradient_brush(device_context, window_bounds);
 	blue_brush = helpers::create_blue_gradient_brush(device_context, window_bounds);
 
@@ -213,20 +220,7 @@ void painter::create_device_dependent_resources(const CoreWindow& window)
 	helpers::set_render_target(device_context, swap_chain);
 }
 
-void painter::set_previous_line_information(const D2D1_POINT_2F& begin, const D2D1_POINT_2F& end, float stroke_width) noexcept
-{
-	previous_line_begin = begin;
-	previous_line_end = end;
-	previous_line_stroke_width = stroke_width;
-}
-
-void painter::create_resources(const CoreWindow& window) noexcept
-{
-	create_factory();
-	recreate_device_dependent_resources_if_needed([&] { create_device_dependent_resources(window); });
-}
-
-void painter::resize(const Rect& window_bounds) noexcept
+void painter::resize_resources(const winrt::Windows::Foundation::Rect& window_bounds) noexcept
 {
 	recreate_device_dependent_resources_if_needed(
 		[&] {
@@ -239,6 +233,33 @@ void painter::resize(const Rect& window_bounds) noexcept
 			helpers::resize_brushes(red_brush, blue_brush, window_bounds);
 		}
 	);
+}
+
+void painter::set_previous_line_information(const D2D1_POINT_2F& begin, const D2D1_POINT_2F& end, float stroke_width) noexcept
+{
+	previous_line_begin = begin;
+	previous_line_end = end;
+	previous_line_stroke_width = stroke_width;
+}
+
+
+void painter::create_resources(const CoreWindow& window) noexcept
+{
+	create_factory();
+	recreate_device_dependent_resources_if_needed([&] { create_device_dependent_resources(window); });
+}
+
+void painter::resize(const Rect& window_bounds) noexcept
+{
+	const auto window_size{ helpers::size_from(window_bounds) };
+	
+	if (previous_window_size == window_size)
+		return;
+
+	previous_window_size = window_size;
+
+	resize_resources(window_bounds);
+	draw_background();
 }
 
 void painter::draw_background() noexcept

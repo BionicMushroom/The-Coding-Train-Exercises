@@ -46,14 +46,12 @@ void main_view::Uninitialize() const noexcept
 
 void main_view::prepare_window(const CoreWindow& window) noexcept
 {
-	/*
-		We could have used ResizeCompleted for improved efficiency but for some reason
-		it doesn't get called when the window is maximized/minimized or when the DPI is changed.
-	*/
-
-	window.SizeChanged({ this, &main_view::on_size_changed });
 	window.PointerEntered({ this, &main_view::on_pointer_entered });
 	window.PointerMoved({ this, &main_view::on_pointer_moved });
+
+	window.ResizeStarted({ this, &main_view::on_resize_started });
+	window.ResizeCompleted({ this, &main_view::on_resize_completed });
+	window.SizeChanged({ this, &main_view::on_size_changed });
 }
 
 void main_view::prepare_painter(const CoreWindow& window) noexcept
@@ -71,11 +69,6 @@ float main_view::smooth_stroke_width(const Point& current_pointer_position) cons
 	);
 }
 
-void main_view::on_size_changed(const CoreWindow& window, [[maybe_unused]] const WindowSizeChangedEventArgs& arguments) noexcept
-{
-	painter.resize(window.Bounds());
-}
-
 void main_view::on_pointer_entered([[maybe_unused]] const CoreWindow& window, const PointerEventArgs& arguments) noexcept
 {
 	previous_pointer_position = arguments.CurrentPoint().Position();
@@ -90,4 +83,21 @@ void main_view::on_pointer_moved([[maybe_unused]] const CoreWindow& window, cons
 
 	previous_pointer_position = current_pointer_position;
 	previous_stroke_width = stroke_width;
+}
+
+void main_view::on_resize_started([[maybe_unused]] const CoreWindow& window, [[maybe_unused]] const IInspectable& inspectable) noexcept
+{
+	is_resizing = true;
+}
+
+void main_view::on_resize_completed(const CoreWindow& window, [[maybe_unused]] const IInspectable& inspectable) noexcept
+{
+	is_resizing = false;
+	painter.resize(window.Bounds());
+}
+
+void main_view::on_size_changed(const CoreWindow& window, [[maybe_unused]] const WindowSizeChangedEventArgs& arguments) noexcept
+{
+	if (!is_resizing)
+		painter.resize(window.Bounds());
 }

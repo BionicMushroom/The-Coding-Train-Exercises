@@ -8,12 +8,15 @@ class painter final
 	winrt::com_ptr<ID2D1LinearGradientBrush> blue_brush;
 	winrt::com_ptr<IDXGISwapChain1> swap_chain;
 
+	winrt::Windows::Foundation::Size previous_window_size{};
 	D2D1_POINT_2F previous_line_begin{ D2D1::Point2F() };
 	D2D1_POINT_2F previous_line_end{ D2D1::Point2F() };
 	float previous_line_stroke_width{ 1.f };
 
 	void create_factory() noexcept;
 	void create_device_dependent_resources(const winrt::Windows::UI::Core::CoreWindow& window);
+
+	void resize_resources(const winrt::Windows::Foundation::Rect& window_bounds) noexcept;
 
 	void set_previous_line_information(const D2D1_POINT_2F& begin, const D2D1_POINT_2F& end, float stroke_width) noexcept;
 
