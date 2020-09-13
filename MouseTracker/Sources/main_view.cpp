@@ -3,7 +3,9 @@
 
 using namespace winrt::Windows::ApplicationModel::Core;
 using namespace winrt::Windows::Foundation;
+using namespace winrt::Windows::UI;
 using namespace winrt::Windows::UI::Core;
+using namespace winrt::Windows::UI::ViewManagement;
 
 namespace constants
 {
@@ -12,6 +14,29 @@ namespace constants
 
 namespace helpers
 {
+	static void customize_title_bar() noexcept
+	{
+		const auto title_bar{ ApplicationView::GetForCurrentView().TitleBar() };
+
+		const auto background_color{ Colors::Black() };
+		const auto foreground_color{ Colors::White() };
+
+		const auto inactive_background_color{ Colors::Black() };
+		const auto inactive_foreground_color{ Colors::DimGray() };
+
+		title_bar.BackgroundColor(background_color);
+		title_bar.ForegroundColor(foreground_color);
+
+		title_bar.InactiveBackgroundColor(inactive_background_color);
+		title_bar.InactiveForegroundColor(inactive_foreground_color);
+
+		title_bar.ButtonBackgroundColor(background_color);
+		title_bar.ButtonForegroundColor(foreground_color);
+
+		title_bar.ButtonInactiveBackgroundColor(inactive_background_color);
+		title_bar.ButtonInactiveForegroundColor(inactive_foreground_color);
+	}
+
 	static auto distance(const Point& point_1, const Point& point_2) noexcept
 	{
 		return std::sqrt(std::pow(point_2.X - point_1.X, 2.f) + std::pow(point_2.Y - point_1.Y, 2.f));
@@ -46,6 +71,8 @@ void main_view::Uninitialize() const noexcept
 
 void main_view::prepare_window(const CoreWindow& window) noexcept
 {
+	helpers::customize_title_bar();
+
 	window.PointerEntered({ this, &main_view::on_pointer_entered });
 	window.PointerMoved({ this, &main_view::on_pointer_moved });
 
