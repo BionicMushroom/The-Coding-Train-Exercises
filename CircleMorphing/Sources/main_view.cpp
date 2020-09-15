@@ -4,6 +4,34 @@
 using namespace winrt::Windows::ApplicationModel::Core;
 using namespace winrt::Windows::Foundation;
 using namespace winrt::Windows::UI::Core;
+using namespace winrt::Windows::UI::ViewManagement;
+
+namespace helpers
+{
+	namespace details
+	{
+		static void customize_title_bar_buttons(const ApplicationViewTitleBar& title_bar) noexcept
+		{
+			title_bar.ButtonBackgroundColor(painter::background_color());
+			title_bar.ButtonForegroundColor(painter::circle_original_color());
+
+			title_bar.ButtonHoverBackgroundColor(painter::circle_transitioned_color());
+			title_bar.ButtonHoverForegroundColor(painter::background_color());
+
+			title_bar.ButtonInactiveBackgroundColor(painter::background_color());
+			title_bar.ButtonInactiveForegroundColor(painter::circle_transitioned_color());
+
+			title_bar.ButtonPressedBackgroundColor(painter::circle_original_color());
+			title_bar.ButtonPressedForegroundColor(painter::background_color());
+		}
+	}
+
+	static void customize_title_bar() noexcept
+	{
+		CoreApplication::GetCurrentView().TitleBar().ExtendViewIntoTitleBar(true);
+		details::customize_title_bar_buttons(ApplicationView::GetForCurrentView().TitleBar());
+	}
+}
 
 void main_view::Initialize([[maybe_unused]] const CoreApplicationView& application_view) const noexcept
 {
@@ -33,6 +61,7 @@ void main_view::Uninitialize() const noexcept
 
 void main_view::prepare_window(const CoreWindow& window) noexcept
 {
+	helpers::customize_title_bar();
 	window.SizeChanged({ this, &main_view::on_size_changed });
 }
 

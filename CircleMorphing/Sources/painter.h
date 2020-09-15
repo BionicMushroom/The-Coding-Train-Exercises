@@ -2,6 +2,10 @@
 
 class painter final
 {
+	constexpr static winrt::Windows::UI::Color mint{ 0xFF, 0xAD, 0xEF, 0xD1 };
+	constexpr static winrt::Windows::UI::Color pacific_blue{ 0xFF, 0x1C, 0xA9, 0xC9 };
+	constexpr static winrt::Windows::UI::Color sailor_blue{ 0xFF, 0x00, 0x20, 0x3F };
+
 	winrt::Windows::UI::Composition::CompositionTarget render_target{ nullptr };
 	winrt::Windows::UI::Composition::ShapeVisual root_visual{ nullptr };
 
@@ -22,4 +26,19 @@ class painter final
 public:
 	void create_shapes() noexcept;
 	void resize(const winrt::Windows::Foundation::Numerics::float2& window_size) const noexcept;
+
+	[[nodiscard]] constexpr static winrt::Windows::UI::Color circle_original_color() noexcept
+	{
+		return mint;
+	}
+
+	[[nodiscard]] constexpr static winrt::Windows::UI::Color circle_transitioned_color() noexcept
+	{
+		return pacific_blue;
+	}
+
+	[[nodiscard]] constexpr static winrt::Windows::UI::Color background_color() noexcept
+	{
+		return sailor_blue;
+	}
 };

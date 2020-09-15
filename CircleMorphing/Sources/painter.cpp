@@ -9,16 +9,6 @@ using namespace winrt::Windows::UI::Composition;
 #define THIS_TARGET_ANIMATED_RADIUS L"this.Target." ANIMATED_RADIUS
 // I know macros are ugly but unfortunately there is no easy way to implement and read constexpr strings in C++ 17.
 
-namespace constants
-{
-	namespace color
-	{
-		constexpr static Color mint{ 0xFF, 0xAD, 0xEF, 0xD1 };
-		constexpr static Color pacific_blue{ 0xFF, 0x1C, 0xA9, 0xC9 };
-		constexpr static Color sailor_blue{ 0xFF, 0x00, 0x20, 0x3F };
-	}
-}
-
 namespace helpers
 {
 	namespace details
@@ -74,14 +64,14 @@ void painter::create_render_target_and_root_visual() noexcept
 void painter::create_background() noexcept
 {
 	background = root_visual.Compositor().CreateRectangleGeometry();
-	create_and_append_sprite_shape(background, constants::color::sailor_blue);
+	create_and_append_sprite_shape(background, background_color());
 }
 
 void painter::create_circle() noexcept
 {
 	circle = root_visual.Compositor().CreateEllipseGeometry();
 
-	helpers::create_color_animation(create_and_append_sprite_shape(circle, constants::color::mint), constants::color::mint, constants::color::pacific_blue);
+	helpers::create_color_animation(create_and_append_sprite_shape(circle, circle_original_color()), circle_original_color(), circle_transitioned_color());
 	helpers::create_size_animation(circle);
 }
 
