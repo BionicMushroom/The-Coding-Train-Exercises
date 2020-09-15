@@ -3,6 +3,7 @@
   "components": [
     "Microsoft.VisualStudio.Component.CoreEditor",
     "Microsoft.VisualStudio.Workload.CoreEditor",
+    "Microsoft.NetCore.Component.Runtime.5.0",
     "Microsoft.NetCore.Component.Runtime.3.1",
     "Microsoft.NetCore.Component.SDK",
     "Microsoft.VisualStudio.Component.NuGet",
@@ -17,9 +18,13 @@
     "Microsoft.VisualStudio.Component.DiagnosticTools",
     "Microsoft.VisualStudio.Component.AppInsights.Tools",
     "Microsoft.VisualStudio.Component.VC.CoreIde",
+    "Microsoft.VisualStudio.Component.Windows10SDK",
     "Microsoft.VisualStudio.Component.VC.Tools.x86.x64",
-    "Microsoft.VisualStudio.Component.Windows10SDK.18362",
+    "Microsoft.VisualStudio.Component.Graphics.Tools",
+    "Microsoft.VisualStudio.Component.VC.DiagnosticTools",
+    "Microsoft.VisualStudio.Component.Windows10SDK.19041",
     "Microsoft.ComponentGroup.Blend",
+    "Microsoft.VisualStudio.Component.Debugger.JustInTime",
     "Microsoft.VisualStudio.ComponentGroup.MSIX.Packaging",
     "Microsoft.VisualStudio.Component.VC.Redist.14.Latest",
     "Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core",
@@ -33,6 +38,7 @@
     "Microsoft.VisualStudio.Component.UWP.VC.ARM64",
     "Microsoft.VisualStudio.Component.VC.Tools.ARM",
     "Microsoft.VisualStudio.ComponentGroup.UWP.VC",
-    "Microsoft.VisualStudio.Workload.Universal"
+    "Microsoft.VisualStudio.Workload.Universal",
+    "Microsoft.VisualStudio.Component.NuGet.BuildTools"
   ]
 }
