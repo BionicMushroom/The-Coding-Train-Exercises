@@ -3,7 +3,7 @@
 struct view_factory
 	: winrt::implements<view_factory, winrt::Windows::ApplicationModel::Core::IFrameworkViewSource>
 {
-	view_factory(const winrt::Windows::ApplicationModel::Core::IFrameworkView& framework_view) noexcept;
+	explicit view_factory(const winrt::Windows::ApplicationModel::Core::IFrameworkView& framework_view) noexcept;
 
 	view_factory(const view_factory& other) noexcept = default;
 	view_factory(view_factory&& other) noexcept = default;
