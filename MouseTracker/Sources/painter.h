@@ -17,6 +17,7 @@ class painter final
 	void create_device_dependent_resources(const winrt::Windows::UI::Core::CoreWindow& window);
 
 	void resize_resources(const winrt::Windows::Foundation::Rect& window_bounds) noexcept;
+	void draw_background() noexcept;
 
 	void set_previous_line_information(const D2D1_POINT_2F& begin, const D2D1_POINT_2F& end, float stroke_width) noexcept;
 
@@ -60,8 +61,6 @@ class painter final
 public:
 	void create_resources(const winrt::Windows::UI::Core::CoreWindow& window) noexcept;
 	void resize(const winrt::Windows::Foundation::Rect& window_bounds) noexcept;
-
-	void draw_background() noexcept;
 
 	void draw_line(
 		const winrt::Windows::Foundation::Point& begin,

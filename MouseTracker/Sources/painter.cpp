@@ -235,6 +235,11 @@ void painter::resize_resources(const winrt::Windows::Foundation::Rect& window_bo
 	);
 }
 
+void painter::draw_background() noexcept
+{
+	draw([&]() noexcept { device_context->Clear(); });
+}
+
 void painter::set_previous_line_information(const D2D1_POINT_2F& begin, const D2D1_POINT_2F& end, float stroke_width) noexcept
 {
 	previous_line_begin = begin;
@@ -260,11 +265,6 @@ void painter::resize(const Rect& window_bounds) noexcept
 
 	resize_resources(window_bounds);
 	draw_background();
-}
-
-void painter::draw_background() noexcept
-{
-	draw([&]() noexcept { device_context->Clear(); });
 }
 
 void painter::draw_line(const Point& begin, const Point& end, float stroke_width) noexcept

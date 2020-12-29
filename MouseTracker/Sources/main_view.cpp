@@ -37,7 +37,7 @@ namespace helpers
 		title_bar.ButtonInactiveForegroundColor(inactive_foreground_color);
 	}
 
-	static auto distance(const Point& point_1, const Point& point_2) noexcept
+	[[nodiscard]] static auto distance(const Point& point_1, const Point& point_2) noexcept
 	{
 		return std::hypot(point_2.X - point_1.X, point_2.Y - point_1.Y);
 	}
@@ -84,7 +84,6 @@ void main_view::prepare_window(const CoreWindow& window) noexcept
 void main_view::prepare_painter(const CoreWindow& window) noexcept
 {
 	painter.create_resources(window);
-	painter.draw_background();
 }
 
 float main_view::smooth_stroke_width(const Point& current_pointer_position) const noexcept
