@@ -39,7 +39,7 @@ namespace helpers
 
 	static auto distance(const Point& point_1, const Point& point_2) noexcept
 	{
-		return std::sqrt(std::pow(point_2.X - point_1.X, 2.f) + std::pow(point_2.Y - point_1.Y, 2.f));
+		return std::hypot(point_2.X - point_1.X, point_2.Y - point_1.Y);
 	}
 }
 
