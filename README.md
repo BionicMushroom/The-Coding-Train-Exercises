@@ -15,4 +15,4 @@ This exercise draws a line between the current and previous mouse position using
 ## CircleMorphing
 This exercise animates the color and size of a circle using key frame animations provided by Windows.UI.Composition. The proposal to animate something was stated in https://www.youtube.com/watch?v=rZ36BzXFT6Q.
 ## PointillistPainting
-This exercise draws circles using Direct2D in a random position, having a randomly sized radius and a randomly generated color. The idea to create a pointillist painting based on output given by a random number generator was given towards the end of https://www.youtube.com/watch?v=50Rzvxvi8D0.
+This exercise draws circles using Direct2D in a random position, having a randomly sized radius and a randomly generated color. The idea to create a pointillist painting based on output given by a random number generator was expressed towards the end of https://www.youtube.com/watch?v=50Rzvxvi8D0.
