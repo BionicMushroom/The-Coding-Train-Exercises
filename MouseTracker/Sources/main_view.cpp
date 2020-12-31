@@ -14,7 +14,7 @@ namespace constants
 
 namespace helpers
 {
-	static void customize_title_bar() noexcept
+	static auto customize_title_bar() noexcept
 	{
 		const auto title_bar{ ApplicationView::GetForCurrentView().TitleBar() };
 

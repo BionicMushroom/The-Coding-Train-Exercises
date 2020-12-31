@@ -10,7 +10,7 @@ namespace helpers
 {
 	namespace details
 	{
-		static void customize_title_bar_buttons(const ApplicationViewTitleBar& title_bar) noexcept
+		static auto customize_title_bar_buttons(const ApplicationViewTitleBar& title_bar) noexcept
 		{
 			title_bar.ButtonBackgroundColor(painter::background_color());
 			title_bar.ButtonForegroundColor(painter::circle_original_color());
@@ -26,7 +26,7 @@ namespace helpers
 		}
 	}
 
-	static void customize_title_bar() noexcept
+	static auto customize_title_bar() noexcept
 	{
 		CoreApplication::GetCurrentView().TitleBar().ExtendViewIntoTitleBar(true);
 		details::customize_title_bar_buttons(ApplicationView::GetForCurrentView().TitleBar());

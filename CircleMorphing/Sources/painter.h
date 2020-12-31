@@ -27,17 +27,17 @@ public:
 	void create_shapes() noexcept;
 	void resize(const winrt::Windows::Foundation::Numerics::float2& window_size) const noexcept;
 
-	[[nodiscard]] constexpr static winrt::Windows::UI::Color circle_original_color() noexcept
+	[[nodiscard]] constexpr static auto circle_original_color() noexcept
 	{
 		return mint;
 	}
 
-	[[nodiscard]] constexpr static winrt::Windows::UI::Color circle_transitioned_color() noexcept
+	[[nodiscard]] constexpr static auto circle_transitioned_color() noexcept
 	{
 		return pacific_blue;
 	}
 
-	[[nodiscard]] constexpr static winrt::Windows::UI::Color background_color() noexcept
+	[[nodiscard]] constexpr static auto background_color() noexcept
 	{
 		return sailor_blue;
 	}
