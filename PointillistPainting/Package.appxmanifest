@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
+  <Identity
+    Name="e8b06411-9fd3-488c-ae9c-16f8e8661120"
+    Publisher="CN=Dumitrescu Tiberiu"
+    Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="e8b06411-9fd3-488c-ae9c-16f8e8661120" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <Properties>
+    <DisplayName>PointillistPainting</DisplayName>
+    <PublisherDisplayName>Dumitrescu Tiberiu</PublisherDisplayName>
+    <Logo>Assets\StoreLogo.png</Logo>
+  </Properties>
+  <Dependencies>
+    <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
+  </Dependencies>
+  <Resources>
+    <Resource Language="x-generate" />
+  </Resources>
+  <Applications>
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="PointillistPainting.App">
+      <uap:VisualElements DisplayName="PointillistPainting" Description="An app that draws circles using Direct2D in a random position, having a randomly sized radius and a randomly generated color. The idea to create a pointillist painting based on output given by a random number generator was given towards the end of https://www.youtube.com/watch?v=50Rzvxvi8D0."
+        Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" BackgroundColor="transparent">
+        <uap:SplashScreen Image="Assets\SplashScreen.png"  BackgroundColor="black"/>
+        <uap:DefaultTile/>
+      </uap:VisualElements>
+    </Application>
+  </Applications>
+  <Capabilities>
+    <Capability Name="internetClient" />
+  </Capabilities>
+</Package>
