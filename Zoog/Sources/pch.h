@@ -1,6 +1,5 @@
 ﻿#pragma once
 
-#define NOMINMAX
 #include <Windows.h>
 
 #include <winrt/Windows.ApplicationModel.Core.h>
