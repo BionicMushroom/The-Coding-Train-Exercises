@@ -45,8 +45,8 @@ private:
 
 	winrt::Windows::System::DispatcherQueueTimer drawing_timer{ nullptr };
 	
-	winrt::Windows::Foundation::Size window_size;
-	winrt::Windows::Foundation::Point next_value_after_max_allowed_coordinates;
+	winrt::Windows::Foundation::Size window_size{};
+	winrt::Windows::Foundation::Point next_value_after_max_allowed_coordinates{};
 
 	bool is_resizing{ false };
 };
