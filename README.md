@@ -1,4 +1,4 @@
-# The-Coding-Train-Exercises
+# The Coding Train Exercises
 This is a collection of exercises proposed on The Coding Train Youtube channel (https://www.youtube.com/user/shiffman) but with a catch: they're implemented in C++ as UWP applications.
 # How To Build
 You need at least Windows 10 version 2004 and Visual Studio 2019 16.8. Earlier versions of Windows and Visual Studio might work but they haven't been tested.
