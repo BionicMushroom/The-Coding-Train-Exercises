@@ -4,8 +4,7 @@ This is a collection of exercises proposed on The Coding Train Youtube channel (
 
 # How To Work On The Code
 
-You need at least Windows 10 version 2004 and Visual Studio 2022 Preview 3. Earlier versions of Windows and Visual Studio might work but they haven't been tested.
-To run the exercises you need to open up *The Coding Train Exercises.sln* solution, follow any prompts that might appear to install required dependencies and to enable Developer Mode and then right click on the project you're interested in and select *Debug* -> *Start New Instance*. This will build the project, deploy it on the local machine and then run the newly created package.
+You need at least Windows 10 version 2004 and Visual Studio 2022 Preview 3. Earlier versions of Windows and Visual Studio might work but they haven't been tested. To run the exercises you need to open up *The Coding Train Exercises.sln* solution, follow any prompts that might appear to install required dependencies and to enable Developer Mode and then right click on the project you're interested in and select *Debug* -> *Start New Instance*. This will build the project, deploy it on the local machine and then run the newly created package.
 
 # How To Work On The Visual Assets
 
