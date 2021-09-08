@@ -56,10 +56,10 @@ namespace helpers
 			return device;
 		}
 
-		[[nodiscard]] static auto create_d2d_device(const winrt::com_ptr<ID2D1Factory1>& factory, const winrt::com_ptr<IDXGIDevice1>& dxgi_device)
+		[[nodiscard]] static auto create_d2d_device(ID2D1Factory1& factory, IDXGIDevice1& dxgi_device)
 		{
 			winrt::com_ptr<ID2D1Device> device;
-			winrt::check_hresult(factory->CreateDevice(dxgi_device.get(), device.put()));
+			winrt::check_hresult(factory.CreateDevice(&dxgi_device, device.put()));
 
 			return device;
 		}
@@ -77,7 +77,7 @@ namespace helpers
 		return factory;
 	}
 
-	[[nodiscard]] static auto create_d2d_device_context(const winrt::com_ptr<ID2D1Factory1>& factory, const winrt::com_ptr<IDXGIDevice1>& dxgi_device)
+	[[nodiscard]] static auto create_d2d_device_context(ID2D1Factory1& factory, IDXGIDevice1& dxgi_device)
 	{
 		winrt::com_ptr<ID2D1DeviceContext> device_context;
 
@@ -94,10 +94,10 @@ namespace helpers
 		return details::create_d3d_device().as<IDXGIDevice1>();
 	}
 
-	[[nodiscard]] static auto create_swap_chain(const winrt::com_ptr<IDXGIDevice1>& dxgi_device, const CoreWindow& window)
+	[[nodiscard]] static auto create_swap_chain(IDXGIDevice1& dxgi_device, const CoreWindow& window)
 	{
 		winrt::com_ptr<IDXGIAdapter> adapter;
-		winrt::check_hresult(dxgi_device->GetAdapter(adapter.put()));
+		winrt::check_hresult(dxgi_device.GetAdapter(adapter.put()));
 
 		winrt::com_ptr<IDXGIFactory2> factory;
 		factory.capture(adapter, &IDXGIAdapter::GetParent);
@@ -116,28 +116,28 @@ namespace helpers
 		winrt::com_ptr<IDXGISwapChain1> swap_chain;
 
 		winrt::check_hresult(
-			factory->CreateSwapChainForCoreWindow(dxgi_device.get(), winrt::get_unknown(window),
+			factory->CreateSwapChainForCoreWindow(&dxgi_device, winrt::get_unknown(window),
 				&swap_chain_description, nullptr, swap_chain.put())
 		);
 
 		return swap_chain;
 	}
 
-	[[nodiscard]] static auto create_brush(const winrt::com_ptr<ID2D1DeviceContext>& device_context)
+	[[nodiscard]] static auto create_brush(ID2D1DeviceContext& device_context)
 	{
 		winrt::com_ptr<ID2D1SolidColorBrush> brush;
 
 		winrt::check_hresult(
-			device_context->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), brush.put())
+			device_context.CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::Black), brush.put())
 		);
 
 		return brush;
 	}
 
-	static auto set_render_target(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const winrt::com_ptr<IDXGISwapChain1>& swap_chain)
+	static auto set_render_target(ID2D1DeviceContext& device_context, IDXGISwapChain1& swap_chain)
 	{
 		winrt::com_ptr<IDXGISurface> back_buffer;
-		back_buffer.capture(swap_chain, &IDXGISwapChain1::GetBuffer, 0);
+		back_buffer.capture(&swap_chain, &IDXGISwapChain1::GetBuffer, 0);
 
 		const auto dpi{ DisplayInformation::GetForCurrentView().LogicalDpi() };
 		
@@ -147,16 +147,16 @@ namespace helpers
 		winrt::com_ptr<ID2D1Bitmap1> bitmap;
 
 		winrt::check_hresult(
-			device_context->CreateBitmapFromDxgiSurface(back_buffer.get(), bitmap_properties, bitmap.put())
+			device_context.CreateBitmapFromDxgiSurface(back_buffer.get(), bitmap_properties, bitmap.put())
 		);
 
-		device_context->SetTarget(bitmap.get());
-		device_context->SetDpi(dpi, dpi);
+		device_context.SetTarget(bitmap.get());
+		device_context.SetDpi(dpi, dpi);
 	}
 
-	static auto resize(const winrt::com_ptr<IDXGISwapChain1>& swap_chain)
+	static auto resize(IDXGISwapChain1& swap_chain)
 	{
-		winrt::check_hresult(swap_chain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
+		winrt::check_hresult(swap_chain.ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
 	}
 
 	[[nodiscard]] constexpr static auto d2d1_color_from(const Color& color) noexcept
@@ -173,12 +173,12 @@ void painter::create_factory() noexcept
 void painter::create_device_dependent_resources(const CoreWindow& window)
 {
 	const auto dxgi_device{ helpers::create_dxgi_device() };
-	device_context = helpers::create_d2d_device_context(factory, dxgi_device);
+	device_context = helpers::create_d2d_device_context(*factory, *dxgi_device);
 
-	previous_ellipse_brush = helpers::create_brush(device_context);
+	previous_ellipse_brush = helpers::create_brush(*device_context);
 
-	swap_chain = helpers::create_swap_chain(dxgi_device, window);
-	helpers::set_render_target(device_context, swap_chain);
+	swap_chain = helpers::create_swap_chain(*dxgi_device, window);
+	helpers::set_render_target(*device_context, *swap_chain);
 }
 
 void painter::resize_resources() noexcept
@@ -188,8 +188,8 @@ void painter::resize_resources() noexcept
 			device_context->SetTarget(nullptr);
 			set_previous_ellipse_information(D2D1::Ellipse(D2D1::Point2F(), 0.f, 0.f), D2D1::ColorF(D2D1::ColorF::Black));
 
-			helpers::resize(swap_chain);
-			helpers::set_render_target(device_context, swap_chain);
+			helpers::resize(*swap_chain);
+			helpers::set_render_target(*device_context, *swap_chain);
 		}
 	);
 }

@@ -54,15 +54,15 @@ namespace helpers
 			return device;
 		}
 
-		[[nodiscard]] static auto create_d2d_device(const winrt::com_ptr<ID2D1Factory1>& factory, const winrt::com_ptr<IDXGIDevice1>& dxgi_device)
+		[[nodiscard]] static auto create_d2d_device(ID2D1Factory1& factory, IDXGIDevice1& dxgi_device)
 		{
 			winrt::com_ptr<ID2D1Device> device;
-			winrt::check_hresult(factory->CreateDevice(dxgi_device.get(), device.put()));
+			winrt::check_hresult(factory.CreateDevice(&dxgi_device, device.put()));
 
 			return device;
 		}
 
-		[[nodiscard]] static auto create_gradient_brush(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const D2D1_POINT_2F& end_point, D2D1::ColorF::Enum color, float alpha)
+		[[nodiscard]] static auto create_gradient_brush(ID2D1DeviceContext& device_context, const D2D1_POINT_2F& end_point, D2D1::ColorF::Enum color, float alpha)
 		{
 			const std::array gradient_stops{
 				D2D1::GradientStop(0.f, D2D1::ColorF(D2D1::ColorF::Black, alpha)),
@@ -72,13 +72,13 @@ namespace helpers
 			winrt::com_ptr<ID2D1GradientStopCollection> stop_collection;
 
 			winrt::check_hresult(
-				device_context->CreateGradientStopCollection(gradient_stops.data(), UINT32{ gradient_stops.size() }, stop_collection.put())
+				device_context.CreateGradientStopCollection(gradient_stops.data(), UINT32{ gradient_stops.size() }, stop_collection.put())
 			);
 
 			winrt::com_ptr<ID2D1LinearGradientBrush> brush;
 
 			winrt::check_hresult(
-				device_context->CreateLinearGradientBrush(D2D1::LinearGradientBrushProperties(D2D1::Point2F(), end_point), stop_collection.get(), brush.put())
+				device_context.CreateLinearGradientBrush(D2D1::LinearGradientBrushProperties(D2D1::Point2F(), end_point), stop_collection.get(), brush.put())
 			);
 
 			return brush;
@@ -107,7 +107,7 @@ namespace helpers
 		return factory;
 	}
 
-	[[nodiscard]] static auto create_d2d_device_context(const winrt::com_ptr<ID2D1Factory1>& factory, const winrt::com_ptr<IDXGIDevice1>& dxgi_device)
+	[[nodiscard]] static auto create_d2d_device_context(ID2D1Factory1& factory, IDXGIDevice1& dxgi_device)
 	{
 		winrt::com_ptr<ID2D1DeviceContext> device_context;
 
@@ -124,10 +124,10 @@ namespace helpers
 		return details::create_d3d_device().as<IDXGIDevice1>();
 	}
 
-	[[nodiscard]] static auto create_swap_chain(const winrt::com_ptr<IDXGIDevice1>& dxgi_device, const CoreWindow& window)
+	[[nodiscard]] static auto create_swap_chain(IDXGIDevice1& dxgi_device, const CoreWindow& window)
 	{
 		winrt::com_ptr<IDXGIAdapter> adapter;
-		winrt::check_hresult(dxgi_device->GetAdapter(adapter.put()));
+		winrt::check_hresult(dxgi_device.GetAdapter(adapter.put()));
 
 		winrt::com_ptr<IDXGIFactory2> factory;
 		factory.capture(adapter, &IDXGIAdapter::GetParent);
@@ -146,33 +146,33 @@ namespace helpers
 		winrt::com_ptr<IDXGISwapChain1> swap_chain;
 
 		winrt::check_hresult(
-			factory->CreateSwapChainForCoreWindow(dxgi_device.get(), winrt::get_unknown(window),
+			factory->CreateSwapChainForCoreWindow(&dxgi_device, winrt::get_unknown(window),
 				&swap_chain_description, nullptr, swap_chain.put())
 		);
 
 		return swap_chain;
 	}
 
-	[[nodiscard]] static auto create_red_gradient_brush(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const Rect& window_bounds)
+	[[nodiscard]] static auto create_red_gradient_brush(ID2D1DeviceContext& device_context, const Rect& window_bounds)
 	{
 		return details::create_gradient_brush(device_context, details::red_brush_end_point(window_bounds), D2D1::ColorF::Red, 1.f);
 	}
 
-	[[nodiscard]] static auto create_blue_gradient_brush(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const Rect& window_bounds)
+	[[nodiscard]] static auto create_blue_gradient_brush(ID2D1DeviceContext& device_context, const Rect& window_bounds)
 	{
 		return details::create_gradient_brush(device_context, details::blue_brush_end_point(window_bounds), D2D1::ColorF::Blue, 0.5f);
 	}
 
-	static auto resize_brushes(const winrt::com_ptr<ID2D1LinearGradientBrush>& red_brush, const winrt::com_ptr<ID2D1LinearGradientBrush>& blue_brush, const Rect& window_bounds) noexcept
+	static auto resize_brushes(ID2D1LinearGradientBrush& red_brush, ID2D1LinearGradientBrush& blue_brush, const Rect& window_bounds) noexcept
 	{
-		red_brush->SetEndPoint(details::red_brush_end_point(window_bounds));
-		blue_brush->SetEndPoint(details::blue_brush_end_point(window_bounds));
+		red_brush.SetEndPoint(details::red_brush_end_point(window_bounds));
+		blue_brush.SetEndPoint(details::blue_brush_end_point(window_bounds));
 	}
 
-	static auto set_render_target(const winrt::com_ptr<ID2D1DeviceContext>& device_context, const winrt::com_ptr<IDXGISwapChain1>& swap_chain)
+	static auto set_render_target(ID2D1DeviceContext& device_context, IDXGISwapChain1& swap_chain)
 	{
 		winrt::com_ptr<IDXGISurface> back_buffer;
-		back_buffer.capture(swap_chain, &IDXGISwapChain1::GetBuffer, 0);
+		back_buffer.capture(&swap_chain, &IDXGISwapChain1::GetBuffer, 0);
 
 		const auto dpi{ DisplayInformation::GetForCurrentView().LogicalDpi() };
 		
@@ -182,16 +182,16 @@ namespace helpers
 		winrt::com_ptr<ID2D1Bitmap1> bitmap;
 
 		winrt::check_hresult(
-			device_context->CreateBitmapFromDxgiSurface(back_buffer.get(), bitmap_properties, bitmap.put())
+			device_context.CreateBitmapFromDxgiSurface(back_buffer.get(), bitmap_properties, bitmap.put())
 		);
 
-		device_context->SetTarget(bitmap.get());
-		device_context->SetDpi(dpi, dpi);
+		device_context.SetTarget(bitmap.get());
+		device_context.SetDpi(dpi, dpi);
 	}
 
-	static auto resize(const winrt::com_ptr<IDXGISwapChain1>& swap_chain)
+	static auto resize(IDXGISwapChain1& swap_chain)
 	{
-		winrt::check_hresult(swap_chain->ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
+		winrt::check_hresult(swap_chain.ResizeBuffers(0, 0, 0, DXGI_FORMAT_UNKNOWN, 0));
 	}
 
 	[[nodiscard]] constexpr static auto size_from(const Rect& rect) noexcept
@@ -208,16 +208,16 @@ void painter::create_factory() noexcept
 void painter::create_device_dependent_resources(const CoreWindow& window)
 {
 	const auto dxgi_device{ helpers::create_dxgi_device() };
-	device_context = helpers::create_d2d_device_context(factory, dxgi_device);
+	device_context = helpers::create_d2d_device_context(*factory, *dxgi_device);
 
 	const auto window_bounds{ window.Bounds() };
 	previous_window_size = helpers::size_from(window_bounds);
 
-	red_brush = helpers::create_red_gradient_brush(device_context, window_bounds);
-	blue_brush = helpers::create_blue_gradient_brush(device_context, window_bounds);
+	red_brush = helpers::create_red_gradient_brush(*device_context, window_bounds);
+	blue_brush = helpers::create_blue_gradient_brush(*device_context, window_bounds);
 
-	swap_chain = helpers::create_swap_chain(dxgi_device, window);
-	helpers::set_render_target(device_context, swap_chain);
+	swap_chain = helpers::create_swap_chain(*dxgi_device, window);
+	helpers::set_render_target(*device_context, *swap_chain);
 }
 
 void painter::resize_resources(const winrt::Windows::Foundation::Rect& window_bounds) noexcept
@@ -227,10 +227,10 @@ void painter::resize_resources(const winrt::Windows::Foundation::Rect& window_bo
 			device_context->SetTarget(nullptr);
 			set_previous_line_information(D2D1::Point2F(), D2D1::Point2F(), 1.f);
 
-			helpers::resize(swap_chain);
-			helpers::set_render_target(device_context, swap_chain);
+			helpers::resize(*swap_chain);
+			helpers::set_render_target(*device_context, *swap_chain);
 
-			helpers::resize_brushes(red_brush, blue_brush, window_bounds);
+			helpers::resize_brushes(*red_brush, *blue_brush, window_bounds);
 		}
 	);
 }
