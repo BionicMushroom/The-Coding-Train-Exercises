@@ -137,9 +137,7 @@ Point main_view::random_coordinates() noexcept
 float main_view::random_radius(const Point& coordinates) noexcept
 {
 	const auto max_allowed_radius{ std::max(
-		std::min(
-			std::min(coordinates.X, coordinates.Y),
-			std::min(window_size.Width - coordinates.X, window_size.Height - coordinates.Y)),
+		std::min({ coordinates.X, coordinates.Y, window_size.Width - coordinates.X, window_size.Height - coordinates.Y }),
 		constants::min_allowed_radius) };
 
 	const std::uniform_real_distribution<float> distribution{ 
