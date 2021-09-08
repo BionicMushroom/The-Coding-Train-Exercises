@@ -12,8 +12,8 @@ namespace helpers
 	{
 		[[nodiscard]] static auto create_d3d_device() noexcept
 		{
-			constexpr auto core_flags{ D3D11_CREATE_DEVICE_SINGLETHREADED | D3D11_CREATE_DEVICE_BGRA_SUPPORT };
-			constexpr auto debugging_flags{ D3D11_CREATE_DEVICE_DEBUG }; // D3D11_CREATE_DEVICE_DEBUGGABLE, while better, seems to fail every time on Nvidia drivers
+			constexpr static auto core_flags{ D3D11_CREATE_DEVICE_SINGLETHREADED | D3D11_CREATE_DEVICE_BGRA_SUPPORT };
+			constexpr static auto debugging_flags{ D3D11_CREATE_DEVICE_DEBUG }; // D3D11_CREATE_DEVICE_DEBUGGABLE, while better, seems to fail every time on Nvidia drivers
 
 			winrt::com_ptr<ID3D11Device> device;
 
@@ -25,7 +25,7 @@ namespace helpers
 			{
 				const auto driver_type{ failed_with_hardware_driver ? D3D_DRIVER_TYPE_WARP : D3D_DRIVER_TYPE_HARDWARE };
 				const auto flags{ failed_with_debugging_flags || !build_configuration::is_debug ? core_flags : (core_flags | debugging_flags) };
-				constexpr auto feature_level{ D3D_FEATURE_LEVEL_11_1 };
+				constexpr static auto feature_level{ D3D_FEATURE_LEVEL_11_1 };
 
 				result = D3D11CreateDevice(nullptr, driver_type, nullptr, flags, &feature_level, 1, D3D11_SDK_VERSION, device.put(), nullptr, nullptr);
 

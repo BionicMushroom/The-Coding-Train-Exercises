@@ -9,7 +9,7 @@ using namespace winrt::Windows::UI::ViewManagement;
 
 namespace constants
 {
-	constexpr static auto maximum_stroke_width_divergence{ 0.8f };
+	constexpr auto maximum_stroke_width_divergence{ 0.8f };
 }
 
 namespace helpers

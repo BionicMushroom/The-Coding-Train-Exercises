@@ -119,7 +119,7 @@ void main_view::draw_body() noexcept
 
 void main_view::draw_legs() noexcept
 {
-	constexpr auto leg_end_offset{ constants::body::maximum_distance_y };
+	constexpr static auto leg_end_offset{ constants::body::maximum_distance_y };
 
 	float2 start{ constants::body::offset.x , constants::body::offset.y + constants::body::size.y };
 	float2 end{ start.x - leg_end_offset, start.y + leg_end_offset };
@@ -137,10 +137,10 @@ void main_view::draw_head() noexcept
 
 void main_view::draw_eyes() noexcept
 {
-	constexpr float offset_from_head_margin{ constants::head::radius.x / 15.f };
-	constexpr auto radius_x{ constants::head::radius.x / 3.4f };
-	constexpr auto radius_y{ radius_x * 2.f };
-	constexpr float2 radius{ radius_x, radius_y };
+	constexpr static float offset_from_head_margin{ constants::head::radius.x / 15.f };
+	constexpr static auto radius_x{ constants::head::radius.x / 3.4f };
+	constexpr static auto radius_y{ radius_x * 2.f };
+	constexpr static float2 radius{ radius_x, radius_y };
 
 	float2 center{ constants::head::center.x - constants::head::radius.x + radius.x + offset_from_head_margin , constants::head::center.y };
 	painter.draw_ellipse(center, radius, constants::color::black, constants::color::black);
